@@ -29,7 +29,7 @@ cs = ctx.cursor()
 #cnx = st.connection("snowflake")
 #session = cnx.session()
 cnx = ctx.connection("snowflake")
-session = cnx.session()
+session = cnx.session
 
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
