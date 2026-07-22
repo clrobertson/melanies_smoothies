@@ -1,35 +1,35 @@
 # Import python packages
 import os
-import snowflake.connector as sc
 import streamlit as st
+from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
-st.title(f":cup_with_straw: Customize Your Smoothie :cup_with_straw:")
+st.title(":cup_with_straw: Customize Your Smoothie :cup_with_straw:")
 
 name_on_order = st.text_input("Name on Smoothie")
 st.write("The name on your smoothie will be: ", name_on_order)
-
-private_key_file = 'rsa_key.p8'
 
 conn_params = {
     'account': 'LARAJJK-AHB36729',
     'user': 'CraigRobertson',
     'authenticator': 'SNOWFLAKE_JWT',
-    'private_key_file': private_key_file,
+    'private_key_file': 'rsa_key.p8',
     'private_key_file_pwd': 'SnowFlake',
     'warehouse': 'COMPUTE_WH',
     'database': 'SMOOTHIES',
     'schema': 'PUBLIC'
 }
 
-ctx = sc.connect(**conn_params)
-cs = ctx.cursor()
+session = Session.builder.configs(conn_params).create()
+
+#ctx = sc.connect(**conn_params)
+#cs = ctx.cursor()
 
 #cnx = st.connection("snowflake")
 #session = cnx.session()
-cnx = ctx.connection("snowflake")
-session = cnx.session
+#cnx = ctx.connection("snowflake")
+#session = cnx.session
 
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
