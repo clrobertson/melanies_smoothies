@@ -17,6 +17,7 @@ conn_params = {
     'user': 'CraigRobertson',
     'authenticator': 'SNOWFLAKE_JWT',
     'private_key_file': private_key_file,
+    'private_key_file_pwd': SnowFlake,
     'warehouse': 'COMPUTE_WH',
     'database': 'SMOOTHIES',
     'schema': 'PUBLIC'
