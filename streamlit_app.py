@@ -24,14 +24,6 @@ conn_params = {
 
 session = Session.builder.configs(conn_params).create()
 
-#ctx = sc.connect(**conn_params)
-#cs = ctx.cursor()
-
-#cnx = st.connection("snowflake")
-#session = cnx.session()
-#cnx = ctx.connection("snowflake")
-#session = cnx.session
-
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 
 ingredients_list = st.multiselect(
@@ -46,6 +38,7 @@ if ingredients_list:
     ingredients_string = ''
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        st.subheader(fruit_chosen + ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
     #st.write(ingredients_string)
